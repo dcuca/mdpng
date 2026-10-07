@@ -1,0 +1,240 @@
+/* ============================================================================
+   mdpng — default dark theme (ray.so-inspired)
+   ALL visual layout lives here. The Go renderer measures #frame and clips to
+   it; it hardcodes no widths, padding, radii, colors or spacing. To create a
+   new theme, copy this folder and change the values below — no code changes.
+   Font references of the form url(fonts/NAME.woff2) are inlined as base64
+   data: URIs by the renderer at load time.
+   ============================================================================ */
+
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400;
+  src: url(fonts/inter-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 600;
+  src: url(fonts/inter-600.woff2) format("woff2");
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 700;
+  src: url(fonts/inter-700.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono"; font-style: normal; font-weight: 400;
+  src: url(fonts/jetbrains-mono-400.woff2) format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono"; font-style: normal; font-weight: 700;
+  src: url(fonts/jetbrains-mono-700.woff2) format("woff2");
+}
+
+:root {
+  /* ---- Layout (owned entirely by the theme) ---- */
+  --card-width: 680px;          /* width of the content card */
+  --outer-padding: 60px;        /* colored background margin around the card */
+  --content-padding: 40px 44px 48px;   /* padding inside the card body */
+  --card-radius: 14px;
+  --titlebar-height: 44px;
+  --titlebar-padding: 0 18px;
+
+  /* ---- Background ---- */
+  --bg: radial-gradient(130% 130% at 15% 0%, #6d5bd0 0%, #8b5cf6 28%, #d946a8 62%, #f0864f 100%);
+
+  /* ---- Window card ---- */
+  --card-bg: #1a1b26;
+  --card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --card-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.55), 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  --titlebar-bg: #16171f;
+  --titlebar-border: 1px solid rgba(255, 255, 255, 0.05);
+
+  /* ---- Traffic-light dots ---- */
+  --dot-size: 12px;
+  --dot-gap: 8px;
+  --dot-red: #ff5f57;
+  --dot-amber: #febc2e;
+  --dot-green: #28c840;
+
+  /* ---- Typography ---- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --fg: #c6cade;
+  --fg-strong: #f2f4fb;
+  --fg-muted: #8a8fa3;
+  --accent: #a48cf2;
+  --link: #87b8ff;
+  --base-size: 15.5px;
+  --line-height: 1.68;
+
+  /* ---- Inline/code surfaces & rules ---- */
+  --inline-code-bg: rgba(255, 255, 255, 0.07);
+  --inline-code-fg: #e0b7f5;
+  --code-radius: 10px;
+  --code-padding: 16px 18px;
+  --rule-color: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --quote-bar: #8b5cf6;
+  --quote-fg: #a9aec4;
+  --table-head-bg: rgba(255, 255, 255, 0.04);
+  --table-stripe: rgba(255, 255, 255, 0.025);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+/* #frame is the element the renderer measures and clips to. It carries the
+   colored background and the outer padding, and shrinks to the card width. */
+#frame {
+  display: inline-block;
+  width: calc(var(--card-width) + 2 * var(--outer-padding));
+  padding: var(--outer-padding);
+  background: var(--bg);
+}
+
+.window {
+  width: 100%;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.titlebar {
+  display: flex;
+  align-items: center;
+  height: var(--titlebar-height);
+  padding: var(--titlebar-padding);
+  background: var(--titlebar-bg);
+  border-bottom: var(--titlebar-border);
+}
+.dots { display: flex; gap: var(--dot-gap); }
+.dot { width: var(--dot-size); height: var(--dot-size); border-radius: 50%; }
+.dot-red { background: var(--dot-red); }
+.dot-amber { background: var(--dot-amber); }
+.dot-green { background: var(--dot-green); }
+.title {
+  flex: 1;
+  text-align: center;
+  margin-right: calc(3 * var(--dot-size) + 2 * var(--dot-gap));
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+/* ---- Rendered markdown ---- */
+.content {
+  padding: var(--content-padding);
+  font-family: var(--font-sans);
+  font-size: var(--base-size);
+  line-height: var(--line-height);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.content > :first-child { margin-top: 0; }
+.content > :last-child { margin-bottom: 0; }
+
+.content h1, .content h2, .content h3,
+.content h4, .content h5, .content h6 {
+  color: var(--fg-strong);
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1.5em 0 0.6em;
+}
+.content h1 { font-size: 1.85em; letter-spacing: -0.02em; }
+.content h2 { font-size: 1.45em; letter-spacing: -0.01em; }
+.content h3 { font-size: 1.2em; }
+.content h4 { font-size: 1.05em; }
+.content h5, .content h6 { font-size: 0.95em; color: var(--fg-muted); }
+
+.content p { margin: 0 0 0.9em; }
+.content strong { color: var(--fg-strong); font-weight: 700; }
+.content em { font-style: italic; }
+.content del { color: var(--fg-muted); }
+.content a { color: var(--link); text-decoration: none; border-bottom: 1px solid rgba(135, 184, 255, 0.35); }
+
+.content ul, .content ol { margin: 0 0 0.9em; padding-left: 1.5em; }
+.content li { margin: 0.3em 0; }
+.content li::marker { color: var(--accent); }
+
+/* Task lists: hide the list marker for any item that holds a checkbox. */
+.content li:has(> input[type="checkbox"]) { list-style: none; margin-left: -1.4em; }
+.content input[type="checkbox"] {
+  appearance: none; -webkit-appearance: none;
+  position: relative;
+  width: 1.05em; height: 1.05em; margin: 0 0.5em 0 0; vertical-align: -0.17em;
+  border: 1.5px solid var(--fg-muted); border-radius: 4px;
+}
+.content input[type="checkbox"]:checked {
+  background: var(--accent); border-color: var(--accent);
+}
+.content input[type="checkbox"]:checked::after {
+  content: ""; position: absolute; left: 0.33em; top: 0.12em;
+  width: 0.26em; height: 0.52em;
+  border: solid #fff; border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.content blockquote {
+  margin: 0 0 0.9em;
+  padding: 0.2em 0 0.2em 1.1em;
+  border-left: 3px solid var(--quote-bar);
+  color: var(--quote-fg);
+}
+.content blockquote p:last-child { margin-bottom: 0; }
+
+.content hr {
+  border: 0;
+  border-top: 1px solid var(--rule-color);
+  margin: 1.6em 0;
+}
+
+/* Inline code */
+.content code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--inline-code-bg);
+  color: var(--inline-code-fg);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+
+/* Fenced code blocks: chroma supplies the background + token colors (theme
+   manifest picks the chroma style); layout/padding/radius come from here. */
+.content pre {
+  margin: 0 0 1.1em;
+  padding: var(--code-padding);
+  border-radius: var(--code-radius);
+  border: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  line-height: 1.55;
+}
+.content pre code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: none;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Tables */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.1em;
+  font-size: 0.92em;
+}
+.content th, .content td {
+  padding: 0.55em 0.8em;
+  border: 1px solid var(--border-subtle);
+  text-align: left;
+}
+.content th { background: var(--table-head-bg); color: var(--fg-strong); font-weight: 600; }
+.content tbody tr:nth-child(even) { background: var(--table-stripe); }
