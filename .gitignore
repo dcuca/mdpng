@@ -3,8 +3,3 @@
 
 # generated output
 md-out*.png
-
-# Only the default theme is published. Any other theme folders (e.g. private or
-# branded ones) stay local and are not committed.
-/assets/themes/*
-!/assets/themes/dark/

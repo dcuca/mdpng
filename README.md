@@ -104,13 +104,17 @@ assets/themes/dark/
   fonts/              # bundled .woff2 fonts (inlined as data: URIs at render time)
 ```
 
-Bundled theme:
+Bundled themes:
 
 - **`dark`** (default) — a polished, ray.so-inspired dark theme with a vivid gradient background.
+- **`brainiac`** — the Brainiac design-system look (dark): Albert Sans, the violet brand with an
+  amber "spark" accent, the near-black surface, and the Brainiac wordmark in the title bar.
+- **`brainiac-light`** — the light side of the same system: white card on a soft brand-tinted wash,
+  dark violet-ink text, light syntax highlighting, and the colored Brainiac wordmark.
 
-To add your own theme (for example, a branded one), copy the `dark` folder, change the values in
-`theme.css` / `theme.json`, and it's immediately available via `--theme <name>` — **no code
-changes**. Fonts are embedded into the binary via `go:embed`, so builds stay self-contained.
+To add another theme, copy an existing folder, change the values in `theme.css` / `theme.json`, and
+it's immediately available via `--theme <name>` — **no code changes**. Fonts are embedded into the
+binary via `go:embed`, so builds stay self-contained.
 
 ## How it works
 

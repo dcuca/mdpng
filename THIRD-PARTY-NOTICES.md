@@ -8,6 +8,7 @@ which permits bundling and redistribution.
 |------|-----------|---------|--------|
 | Inter | © The Inter Project Authors | [OFL-1.1](https://github.com/rsms/inter/blob/master/LICENSE.txt) | https://github.com/rsms/inter |
 | JetBrains Mono | © The JetBrains Mono Project Authors | [OFL-1.1](https://github.com/JetBrains/JetBrainsMono/blob/master/OFL.txt) | https://github.com/JetBrains/JetBrainsMono |
+| Albert Sans | © The Albert Sans Project Authors | [OFL-1.1](https://github.com/andrew-paglinawan/AlbertSansFont/blob/main/OFL.txt) | https://github.com/andrew-paglinawan/AlbertSansFont |
 
 The full text of the SIL Open Font License 1.1 is available at
 <https://openfontlicense.org/open-font-license-official-text/>.
